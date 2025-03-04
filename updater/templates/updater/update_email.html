@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aggiorna Email</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">Aggiornamento Email</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <label class="form-label"><strong>POI ID:</strong></label>
+            <input type="text" class="form-control" name="poiid" required>
+            <label class="form-label"><strong>Nuova Email:</strong></label>
+            <input type="email" class="form-control" name="email_nuova" required>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Aggiorna Email</button>
+        </form>
+
+        {% if message %}
+            <div class="alert alert-success mt-3 text-center">
+                {{ message }}
+            </div>
+        {% endif %}
+
+        {% if result %}
+            <h3 class="mt-4">Questa è la situazione del dealer in cui è contenuto il poi che mi hai indicato</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            {% for header in headers %}
+                                <th>{{ header }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for row in result %}
+                        <tr>
+                            {% for col in row %}
+                                <td>{{ col }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
+
+        <a href="{% url 'home' %}" class="btn btn-secondary w-100 mt-3">Torna alla Home</a>
+    </div>
+</body>
+</html>

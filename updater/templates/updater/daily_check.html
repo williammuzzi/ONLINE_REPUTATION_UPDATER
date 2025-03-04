@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Check</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .container {
+            max-width: 95%;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .table-container {
+            overflow-x: auto;  /* Scroll orizzontale se necessario */
+            max-height: 600px; /* Scroll verticale per evitare una tabella troppo lunga */
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        table {
+            width: 100%;
+            font-size: 12px;  /* Riduce il font */
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 6px;
+            text-align: left;
+            border: 1px solid #ddd;
+            white-space: nowrap;  /* Evita che il testo vada a capo */
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;  /* Righe alternate per leggibilità */
+        }
+        .back-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="container">
+        <h2>Daily Check Report</h2>
+        <div class="table-container">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        {% for column in columns %}
+                        <th>{{ column }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        {% for cell in row %}
+                        <td>{{ cell }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <a href="{% url 'home' %}" class="btn btn-secondary back-btn">Torna alla Home</a>
+    </div>
+</body>
+</html>
