@@ -11,14 +11,21 @@
     <div class="container mt-5">
         <h2 class="text-center">Aggiornamento Email</h2>
         
-        <form method="post">
-            {% csrf_token %}
-            <label class="form-label"><strong>POI ID:</strong></label>
-            <input type="text" class="form-control" name="poiid" required>
-            <label class="form-label"><strong>Nuova Email:</strong></label>
-            <input type="email" class="form-control" name="email_nuova" required>
-            <button type="submit" class="btn btn-primary w-100 mt-3">Aggiorna Email</button>
-        </form>
+<form method="post">
+    {% csrf_token %}
+    <label class="form-label"><strong>POI ID:</strong></label>
+    <input type="text" class="form-control" name="poiid" required>
+    <label class="form-label"><strong>Nuova Email:</strong></label>
+    <input type="email" class="form-control" name="email_nuova" required>
+    <button type="submit" class="btn btn-primary w-100 mt-3">Aggiorna Email</button>
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+        document.cookie = "csrftoken=" + csrfToken + "; path=/";
+    });
+</script>
 
         {% if message %}
             <div class="alert alert-success mt-3 text-center">
