@@ -7,7 +7,6 @@ def home(request):
     return render(request, "updater/index.html")
 
 # Aggiorna Email
-@csrf_exempt  # SOLO PER TEST - RIMUOVILO SE FUNZIONA SENZA
 def update_email(request):
     result = None
     message = None
