@@ -53,6 +53,11 @@ MIDDLEWARE = [
     "allauth.account.middleware.AccountMiddleware",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://online-reputation-ggenhgg2a0a8crhp.northeurope-01.azurewebsites.net',
+    'http://online-reputation-ggenhgg2a0a8crhp.northeurope-01.azurewebsites.net'
+]
+
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
