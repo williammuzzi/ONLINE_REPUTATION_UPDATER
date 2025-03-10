@@ -11,21 +11,42 @@
     <div class="container mt-5">
         <h2 class="text-center">Aggiornamento Email</h2>
         
-<form method="post">
-    {% csrf_token %}
-    <label class="form-label"><strong>POI ID:</strong></label>
-    <input type="text" class="form-control" name="poiid" required>
-    <label class="form-label"><strong>Nuova Email:</strong></label>
-    <input type="email" class="form-control" name="email_nuova" required>
-    <button type="submit" class="btn btn-primary w-100 mt-3">Aggiorna Email</button>
-</form>
+        <form method="post" id="update-email-form">
+            {% csrf_token %}
+            <label class="form-label"><strong>POI ID:</strong></label>
+            <input type="text" class="form-control" name="poiid" required>
+            <label class="form-label"><strong>Nuova Email:</strong></label>
+            <input type="email" class="form-control" name="email_nuova" required>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Aggiorna Email</button>
+        </form>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-        document.cookie = "csrftoken=" + csrfToken + "; path=/";
-    });
-</script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                let form = document.querySelector("#update-email-form");
+                let csrfToken = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+                form.addEventListener("submit", function (event) {
+                    event.preventDefault();  // Evita l'invio standard del form
+                    
+                    fetch(form.action, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            "X-CSRFToken": csrfToken  // Forza l'invio del token CSRF
+                        },
+                        body: new URLSearchParams(new FormData(form))  // Converte i dati del form
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.text();
+                        }
+                        throw new Error("Errore CSRF");
+                    })
+                    .then(data => document.body.innerHTML = data)
+                    .catch(error => alert(error));
+                });
+            });
+        </script>
 
         {% if message %}
             <div class="alert alert-success mt-3 text-center">
